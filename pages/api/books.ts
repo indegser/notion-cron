@@ -21,7 +21,7 @@ export default async function handler(
   try {
     const response = await notion.databases.query({ database_id: '6dc0fa57a6a54cad9242f6feefc22344' })
   
-    const books = response.results.map((page) => ({ id: page.id, title: notionUtils.extractPageTitle(page) }))
+    const books = response.results.map((page) => ({ id: page.id, title: notionUtils.extractPageTitle(page), author: notionUtils.extractText(page, 'author') }))
 
     res.json({ response: books })
   } catch (error) {

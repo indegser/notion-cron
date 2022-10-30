@@ -11,6 +11,18 @@ const extractPageTitle = (page: PageObjectResponse | PartialPageObjectResponse) 
   return title;
 }
 
+const extractText = (page: PageObjectResponse | PartialPageObjectResponse, propertyKey: string) => {
+  if (!isFullPage(page)) return '';
+
+  const textProperty = page.properties[propertyKey]
+  if (!textProperty || textProperty.type !== 'rich_text') {
+    return ''
+  }
+
+  return textProperty.rich_text.map(richText => richText.plain_text).join(' ')
+}
+
 export const notionUtils = {
+  extractText,
   extractPageTitle,
 }
